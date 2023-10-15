@@ -1,17 +1,18 @@
 const fs = require('fs');
 const prompt = require('prompt-sync')();
-let colors = require('colors')
 
-const alphaData = fs.readFileSync('data/alphabetical_work_ranking.txt', 'utf8').split('\0').map(line => line.split(":"));
-const commanalityData = fs.readFileSync('data/commanality_word_ranking.txt', 'utf-8').split('\0').map(line => line.split(":"))
+const solver = () => {
+    const alphaData = fs.readFileSync('data/alphabetical_work_ranking.txt', 'utf8').split('\0').map(line => line.split(":"));
+    const commanalityData = fs.readFileSync('data/commanality_word_ranking.txt', 'utf8').split('\0').map(line => line.split(":"))
+    let possibleAns = fs.readFileSync('data/possible_answer.txt', 'utf8').split('\0')
 
-let firstGuess = alphaData[0][0];
+    let firstGuess = alphaData[0][0];
 
-while (true) {
-    console.log("First Try", firstGuess.red.bold.underline);
+    // while (true) {
+    console.log("First Try", firstGuess);
 
     let firstFeedBack = prompt('Feedback: ');
-    if (firstFeedBack.length < 5) continue;
+    // if (firstFeedBack.length < 5) continue;
 
     // Second Try
     let knownPos = ['.', '.', '.', '.', '.'];
@@ -41,15 +42,20 @@ while (true) {
     for (let i = 0; i < unknownLets.length; i++) {
         filteredData = filteredData.filter(word => word[0].includes(unknownLets[i]))
     }
-    if (!filteredData) {
-        console.log("Fresh Out of Words")
-        continue;
-    }
+    // if (!filteredData) {
+    //     console.log("Fresh Out of Words")
+    //     continue;
+    // }
     let secondGuess = filteredData[0][0];
-    console.log(filteredData);
-    console.log("Second Try", secondGuess.red.bold.underline);
+    possibleAns = possibleAns.filter(word => word.match(reg))
+    for (let i = 0; i < unknownLets.length; i++) {
+        possibleAns = possibleAns.filter(word => word.includes(unknownLets[i]))
+    }
+    console.log(possibleAns.length, possibleAns)
+    console.log("Best Attempts", filteredData.slice(0, 10));
+    console.log("Second Try", secondGuess);
     let secondFeedBack = prompt('Feedback: ');
-    if (secondFeedBack.length < 5) continue;
+    // if (secondFeedBack.length < 5) continue;
 
     // Third Try
     for (let i = 0; i < 5; i++) {
@@ -71,19 +77,24 @@ while (true) {
 
     reg = new RegExp(regStr + '$')
 
-    filteredData = commanalityData.filter(word => word[0].match(reg));
+    filteredData = alphaData.filter(word => word[0].match(reg));
     for (let i = 0; i < unknownLets.length; i++) {
         filteredData = filteredData.filter(word => word[0].includes(unknownLets[i]))
     }
-    if (!filteredData) {
-        console.log("Fresh Out of Words")
-        continue;
-    }
+    // if (!filteredData) {
+    //     console.log("Fresh Out of Words")
+    //     continue;
+    // }
     let thirdGuess = filteredData[0][0];
-    console.log(filteredData);
-    console.log("Third Try", thirdGuess.red.bold.underline);
+    possibleAns = possibleAns.filter(word => word.match(reg))
+    for (let i = 0; i < unknownLets.length; i++) {
+        possibleAns = possibleAns.filter(word => word.includes(unknownLets[i]))
+    }
+    console.log(possibleAns.length, possibleAns)
+    console.log("Best Attempts", filteredData.slice(0, 10));
+    console.log("Third Try", thirdGuess);
     let thirdFeedBack = prompt('Feedback: ');
-    if (thirdFeedBack.length < 5) continue;
+    // if (thirdFeedBack.length < 5) continue;
 
     // Fourth Try
     for (let i = 0; i < 5; i++) {
@@ -107,15 +118,20 @@ while (true) {
     for (let i = 0; i < unknownLets.length; i++) {
         filteredData = filteredData.filter(word => word[0].includes(unknownLets[i]))
     }
-    if (!filteredData) {
-        console.log("Fresh Out of Words")
-        continue;
-    }
+    // if (!filteredData) {
+    // console.log("Fresh Out of Words")
+    // continue;
+    // }
     let fourthGuess = filteredData[0][0];
-    console.log(filteredData);
-    console.log("Fourth Try", fourthGuess.red.bold.underline);
+    possibleAns = possibleAns.filter(word => word.match(reg))
+    for (let i = 0; i < unknownLets.length; i++) {
+        possibleAns = possibleAns.filter(word => word.includes(unknownLets[i]))
+    }
+    console.log(possibleAns.length, possibleAns)
+    console.log("Best Attempts", filteredData.slice(0, 10));
+    console.log("Fourth Try", fourthGuess);
     let fourthFeedBack = prompt('Feedback: ');
-    if (fourthFeedBack.length < 5) continue;
+    // if (fourthFeedBack.length < 5) continue;
 
     // Fifth Try
     for (let i = 0; i < 5; i++) {
@@ -139,12 +155,20 @@ while (true) {
     for (let i = 0; i < unknownLets.length; i++) {
         filteredData = filteredData.filter(word => word[0].includes(unknownLets[i]))
     }
-    if (!filteredData) {
-        console.log("Fresh Out of Words")
-        continue;
-    }
+    // if (!filteredData) {
+    //     console.log("Fresh Out of Words")
+    //     continue;
+    // }
     let fifthGuess = filteredData[0][0];
-    console.log(filteredData);
-    console.log("Fifth Try", fifthGuess.red.bold.underline);
+    possibleAns = possibleAns.filter(word => word.match(reg))
+    for (let i = 0; i < unknownLets.length; i++) {
+        possibleAns = possibleAns.filter(word => word.includes(unknownLets[i]))
+    }
+    console.log(possibleAns.length, possibleAns)
+    console.log("Best Attempts", filteredData.slice(0, 10));
+    console.log("Fifth Try", fifthGuess);
     prompt('')
+    // }
 }
+
+module.exports = { solver }

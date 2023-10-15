@@ -62,7 +62,7 @@ if (fs.readFileSync('data/commanality_word_ranking.txt', 'utf-8').split('\0').le
             fileDataArr.forEach(fileData => {
                 count += fileData.filter(file_word => file_word === word).length;
             })
-            console.log(`Indexing Files: ${word}-${count}`);
+            console.log(`In dexing Files: ${word}-${count}`);
             fs.appendFileSync('data/commanality_word_ranking.txt', `${word}:${count}\0`)
         })
     }
