@@ -1,0 +1,7 @@
+
+
+const wordleSolver = {
+    1: () => {
+
+    }
+}
